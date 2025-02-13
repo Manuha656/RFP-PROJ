@@ -21,6 +21,43 @@ img {
     width: 100%;
 }
 
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.logo {
+    width: 50px; /* Adjust size as needed */
+    height: 50px;
+    border-radius: 50%; /* Ensure a perfect circle */
+    object-fit: cover;
+}
+.small-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+
+
+
+
+
 section {
     padding-top: 80px;
     padding-bottom: 80px;
@@ -88,16 +125,11 @@ section {
     box-shadow: 0 12px 20px rgba(0,0,0,0.1);
 }
 
-.navbar-light .navbar-nav .nav-link.active, 
-.navbar-light .navbar-nav .show > .nav-link {
-    background: linear-gradient(to right, #600028, #2d0065);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent; /* Fallback for unsupported browsers */
-    display: inline-block; /* Ensures the gradient applies correctly */
+.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-link {
+    background: -webkit-linear-gradient(#600028, #2d0065);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
-
 
 .section-intro {
     margin-bottom: 40px;
@@ -134,13 +166,10 @@ section {
 }
 
 .feature i {
-    background: linear-gradient(to right, #600028, #2d0065);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent; /* Fallback for unsupported browsers */
-    font-size: 54px;
-    display: inline-block; /* Ensures text gradient applies correctly */
+    background: -webkit-linear-gradient(#600028, #2d0065);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 54px;
 }
 
 
@@ -264,3 +293,5 @@ footer a {
         transform: rotateX(-15deg) translateY(0px);
     }
 }
+
+
