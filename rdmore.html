@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Booking</title>
+    <style>
+        body {
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            background-size: cover;
+            width: 90%;
+            margin: 20px auto;
+            background-image: url('https://tse3.mm.bing.net/th?id=OIP.p9T9jnhcfGlW3SlXdm5izQHaEK&pid=Api&P=0&h=180');
+            max-width: 1200px;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .image-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .image-section .image-box {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .image-section .image-box img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-section .info {
+            margin-top: 10px;
+            font-size: 1.1em;
+        }
+
+        .image-section .speaker {
+            text-align: center;
+        }
+
+        .image-section .speaker img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-section .speaker .speaker-heading {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .speaker-name {
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+
+        .bg-cover {
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .stats-section {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            color: white;
+            padding: 50px 0;
+        }
+
+        .stats-section div {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stats-section h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        .stats-section p {
+            font-size: 1.2em;
+            margin: 5px 0 0;
+        }
+
+        .book-button {
+            display: inline-block;
+            background-color: #0078d4;
+            color: #fff;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+            margin-top: 30px;
+        }
+
+        .book-button:hover {
+            background-color: #005bb5;
+        }
+
+
+        
+
+
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Event Booking</h1>
+        </div>
+
+        <div class="image-section">
+            <div class="image-box">
+                <img src="https://th.bing.com/th/id/OIP.H8Xw8rAxPGtR38ZKQTlS7gHaE8?w=540&h=360&rs=1&pid=ImgDetMain" alt="Information Image">
+                <p class="info">Webinar is a real-time presentation with audio, video, and/or multimedia components. It's a popular format for 
+                    information sharing across various industries and fields from B2B marketing sessions to classroom lectures.</p>
+            </div>
+            <div class="image-box speaker">
+                <p class="speaker-heading">Speaker</p>
+                <img src="img/avatar_3.jpg" alt="Speaker Image">
+                <p class="speaker-name">Speaker Name</p>
+            </div>
+        </div>
+
+        <section class="bg-cover" style="background-image: url(https://th.bing.com/th/id/OIP.ktqma6UEzONkbCMJ2JC2NgHaFS?w=1200&h=857&rs=1&pid=ImgDetMain);">
+            <div class="stats-section">
+                <div>
+                    <h1>45,00</h1>
+                    <p>Events Held</p>
+                </div>
+                <div>
+                    <h1>120k</h1>
+                    <p>Tickets Sold</p>
+                </div>
+                <div>
+                    <h1>30M+</h1>
+                    <p>Happy Clients</p>
+                </div>
+                <div>
+                    <h1>4,005</h1>
+                    <p>Event Growth</p>
+                </div>
+            </div>
+        </section>
+        <a href="#" class="book-button">Book Now</a>
+    </div>
+
+</body>
+</html>
