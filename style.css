@@ -88,6 +88,12 @@ section {
     align-items: center;
 }
 
+
+
+
+
+
+
 .btn {
     padding: 14px 22px;
     transition: all 0.3s ease;
@@ -293,11 +299,6 @@ footer a {
         transform: rotateX(-15deg) translateY(0px);
     }
 }
-
-
-
-
-
 #Organize{
     padding: 6vw 8vw 6vw 8vw;
     background-image: linear-gradient(rgba(99,112,168,0.5), rgba(81,91,233,0.5)),url('https://img.freepik.com/premium-photo/purple-circuit-board-with-words-x-it_265515-30352.jpg');
@@ -368,3 +369,8 @@ footer a {
     color: rgb(21, 21, 100);
     background: #fff;
 }
+
+
+
+
+
