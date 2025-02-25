@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizer Event Registration</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #600028, #2d0065), url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: multiply;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        /* Container Styling */
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+            width: 70%;
+            max-width: 800px;
+            text-align: center;
+            animation: slideIn 1s ease-in-out;
+            margin: 40px 0;
+            transition: all 0.5s ease-in-out;
+        }
+
+        /* Form Styling */
+        h2 {
+            margin-bottom: 20px;
+            color: #600028;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            margin: auto;
+        }
+
+        label {
+            text-align: left;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #2d0065;
+        }
+
+        input {
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #600028;
+            box-shadow: 0px 0px 10px rgba(96, 0, 40, 0.5);
+            transform: scale(1.02);
+        }
+
+        /* Button Styling */
+        button {
+            margin-top: 20px;
+            padding: 12px;
+            background: #2d0065;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #600028;
+            transform: scale(1.05);
+        }
+
+        /* Pop-up Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+            width: 50%;
+            text-align: center;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .close {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+            color: #600028;
+        }
+
+        .close:hover {
+            color: #2d0065;
+        }
+
+        /* Success message */
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #600028;
+            font-size: 18px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .container {
+                width: 90%;
+            }
+            form {
+                width: 100%;
+            }
+            .modal-content {
+                width: 80%;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Register Your Event</h2>
+        <form id="organizerForm">
+            <label for="organizerName">Organizer Name:</label>
+            <input type="text" id="organizerName" name="organizerName" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" title="Enter a valid 10-digit number">
+
+            <label for="eventName">Event Name:</label>
+            <input type="text" id="eventName" name="eventName" required>
+
+            <label for="eventDate">Event Date:</label>
+            <input type="date" id="eventDate" name="eventDate" required>
+
+            <label for="availableTickets">Available Tickets:</label>
+            <input type="number" id="availableTickets" name="availableTickets" min="1" required>
+
+            <button type="submit">Register Event</button>
+        </form>
+
+        <p id="message"></p>
+    </div>
+
+    <!-- Pop-up Modal -->
+    <div id="popupModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Event Registered Successfully 🎉</h3>
+            <p><strong>Organizer:</strong> <span id="displayOrganizer"></span></p>
+            <p><strong>Email:</strong> <span id="displayEmail"></span></p>
+            <p><strong>Phone:</strong> <span id="displayPhone"></span></p>
+            <p><strong>Event Name:</strong> <span id="displayEvent"></span></p>
+            <p><strong>Event Date:</strong> <span id="displayDate"></span></p>
+            <p><strong>Tickets Available:</strong> <span id="displayTickets"></span></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("organizerForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        let organizerName = document.getElementById("organizerName").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let phone = document.getElementById("phone").value.trim();
+        let eventName = document.getElementById("eventName").value.trim();
+        let eventDate = document.getElementById("eventDate").value;
+        let availableTickets = parseInt(document.getElementById("availableTickets").value);
+
+        if (organizerName === "" || email === "" || phone === "" || eventName === "" || eventDate === "" || isNaN(availableTickets) || availableTickets < 1) {
+            alert("Please fill in all fields correctly.");
+            return;
+        }
+
+        // Show event details in the modal
+        document.getElementById("displayOrganizer").textContent = organizerName;
+        document.getElementById("displayEmail").textContent = email;
+        document.getElementById("displayPhone").textContent = phone;
+        document.getElementById("displayEvent").textContent = eventName;
+        document.getElementById("displayDate").textContent = eventDate;
+        document.getElementById("displayTickets").textContent = availableTickets;
+
+        document.getElementById("popupModal").style.display = "flex";
+
+        this.reset();
+    });
+
+    // Close modal
+    document.querySelector(".close").addEventListener("click", function() {
+        document.getElementById("popupModal").style.display = "none";
+    });
+
+    </script>
+</body>
+</html>
