@@ -23,7 +23,7 @@
 
         /* Container Styling */
         .container {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
@@ -97,31 +97,57 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(6px);
             justify-content: center;
             align-items: center;
             animation: fadeIn 0.5s ease-in-out;
         }
 
         .modal-content {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
             width: 50%;
             text-align: center;
-            animation: slideIn 0.5s ease-in-out;
+            animation: zoomIn 0.3s ease-in-out;
+            position: relative;
+            transition: all 0.3s ease-in-out;
         }
 
-        .close {
-            float: right;
+        .modal-content h3 {
             font-size: 24px;
-            cursor: pointer;
             color: #600028;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            font-size: 18px;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .modal-content p span {
+            font-weight: bold;
+            color: #2d0065;
+        }
+
+        /* Close Button Styling */
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #600028;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
         .close:hover {
             color: #2d0065;
+            transform: scale(1.2);
         }
 
         /* Success message */
@@ -167,6 +193,16 @@
             }
         }
 
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -213,37 +249,46 @@
 
     <script>
         document.getElementById("organizerForm").addEventListener("submit", function(event) {
-        event.preventDefault();
+            event.preventDefault();
 
-        let organizerName = document.getElementById("organizerName").value.trim();
-        let email = document.getElementById("email").value.trim();
-        let phone = document.getElementById("phone").value.trim();
-        let eventName = document.getElementById("eventName").value.trim();
-        let eventDate = document.getElementById("eventDate").value;
-        let availableTickets = parseInt(document.getElementById("availableTickets").value);
+            let organizerName = document.getElementById("organizerName").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let eventName = document.getElementById("eventName").value.trim();
+            let eventDate = document.getElementById("eventDate").value;
+            let availableTickets = parseInt(document.getElementById("availableTickets").value);
 
-        if (organizerName === "" || email === "" || phone === "" || eventName === "" || eventDate === "" || isNaN(availableTickets) || availableTickets < 1) {
-            alert("Please fill in all fields correctly.");
-            return;
-        }
+            if (organizerName === "" || email === "" || phone === "" || eventName === "" || eventDate === "" || isNaN(availableTickets) || availableTickets < 1) {
+                alert("Please fill in all fields correctly.");
+                return;
+            }
 
-        // Show event details in the modal
-        document.getElementById("displayOrganizer").textContent = organizerName;
-        document.getElementById("displayEmail").textContent = email;
-        document.getElementById("displayPhone").textContent = phone;
-        document.getElementById("displayEvent").textContent = eventName;
-        document.getElementById("displayDate").textContent = eventDate;
-        document.getElementById("displayTickets").textContent = availableTickets;
+            // Show event details in the modal
+            document.getElementById("displayOrganizer").textContent = organizerName;
+            document.getElementById("displayEmail").textContent = email;
+            document.getElementById("displayPhone").textContent = phone;
+            document.getElementById("displayEvent").textContent = eventName;
+            document.getElementById("displayDate").textContent = eventDate;
+            document.getElementById("displayTickets").textContent = availableTickets;
 
-        document.getElementById("popupModal").style.display = "flex";
+            let modal = document.getElementById("popupModal");
+            modal.style.display = "flex";
 
-        this.reset();
-    });
+            this.reset();
+        });
 
-    // Close modal
-    document.querySelector(".close").addEventListener("click", function() {
-        document.getElementById("popupModal").style.display = "none";
-    });
+        // Close modal when clicking the close button
+        document.querySelector(".close").addEventListener("click", function() {
+            document.getElementById("popupModal").style.display = "none";
+        });
+
+        // Close modal when clicking outside of the content
+        window.addEventListener("click", function(event) {
+            let modal = document.getElementById("popupModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
 
     </script>
 </body>
