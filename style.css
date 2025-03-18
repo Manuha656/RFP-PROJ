@@ -527,6 +527,17 @@ footer a {
     font-weight: 600;
   }
   
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;  /* Stack image and login box vertically on smaller screens */
+        align-items: center;  /* Center them horizontally */
+    }
+    
+    .login-image, .login {
+        max-width: 100%;  /* Ensure both image and login box take full width on smaller screens */
+        margin-bottom: 20px;  /* Add space between the image and login box */
+    }
+}
 
 
 
