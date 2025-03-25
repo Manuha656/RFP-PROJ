@@ -1,7 +1,6 @@
 #Organize {
     min-height:100vh;
     background-color: hsl(30, 38%, 92%);
-    font-family: 'Montserrat', sans-serif;
 }
 .container_org {
     position: absolute;
@@ -22,7 +21,6 @@
     background-size: cover; 
     background-repeat: no-repeat;
     border-radius: 10px 0px 0px 10px;
-    height: 100%; 
 }
 
 @media only screen and (max-width: 767px) {
