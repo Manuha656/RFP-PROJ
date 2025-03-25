@@ -1,4 +1,8 @@
-
+#Organize {
+    min-height:100vh;
+    background-color: hsl(30, 38%, 92%);
+    font-family: 'Montserrat', sans-serif;
+}
 .container_org {
     position: absolute;
     top: 0;
