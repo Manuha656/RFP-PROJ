@@ -1,175 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Booking</title>
-    <style>
-        body {
-            background-size: cover;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grand Event Countdown & Booking</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('imgg.png') no-repeat center center/cover;
+      color: #fff;
+      text-align: center;
+      backdrop-filter: blur(3px);
+    }
 
-        .container {
-            background-size: cover;
-            width: 90%;
-            margin: 20px auto;
-            background-color: #fff;
-            /*background-image: url('https://tse3.mm.bing.net/th?id=OIP.p9T9jnhcfGlW3SlXdm5izQHaEK&pid=Api&P=0&h=180');*/
-            max-width: 1200px;
-            text-align: center;
-        }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 60px 30px;
+      background: rgba(0, 0, 0, 0.65);
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
 
-        .header {
-            margin-bottom: 30px;
-        }
+    h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #FFD700;
+    }
 
-        .image-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
+    .event-info, .venue {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
 
-        .image-section .image-box {
-            flex: 1;
-            padding: 20px;
-        }
+    .layout {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-top: 40px;
+      gap: 30px;
+    }
 
-        .image-section .image-box img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+    .organizer, .speaker {
+      text-align: center;
+      flex: 1;
+      min-width: 200px;
+    }
 
-        .image-section .info {
-            margin-top: 10px;
-            font-size: 1.1em;
-        }
+    .organizer img, .speaker img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 4px solid #FFD700;
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+    }
 
-        .image-section .speaker {
-            text-align: center;
-        }
+    h2 {
+      margin-bottom: 10px;
+      color: #00FFFF;
+    }
 
-        .image-section .speaker img {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+    .countdown-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
 
-        .image-section .speaker .speaker-heading {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
+    .countdown-box {
+      width: 90px;
+      height: 90px;
+      background: #fff;
+      color: #2C3E50;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.3rem;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+    }
 
-        .speaker-name {
-            font-weight: bold;
-            margin-top: 10px;
-            font-size: 1.2em;
-        }
+    .webinar-info {
+      margin-top: 50px;
+      font-size: 1.1rem;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 25px;
+      border-radius: 15px;
+    }
 
-        .bg-cover {
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
-        }
+    .webinar-info h2 {
+      color: #FFA07A;
+      margin-bottom: 15px;
+    }
 
-        .stats-section {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            color: white;
-            padding: 50px 0;
-        }
+    .book-button {
+      display: inline-block;
+      background-color: #FFA500;
+      color: white;
+      padding: 15px 35px;
+      text-decoration: none;
+      font-size: 1.4rem;
+      font-weight: 600;
+      border-radius: 12px;
+      margin-top: 30px;
+      transition: background 0.3s ease;
+    }
 
-        .stats-section div {
-            text-align: center;
-            flex: 1;
-        }
-
-        .stats-section h1 {
-            font-size: 2.5em;
-            margin: 0;
-        }
-
-        .stats-section p {
-            font-size: 1.2em;
-            margin: 5px 0 0;
-        }
-
-        .book-button {
-            display: inline-block;
-            background-color: #0078d4;
-            color: #fff;
-            padding: 15px 30px;
-            text-decoration: none;
-            font-size: 1.2em;
-            font-weight: bold;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s;
-            margin-top: 30px;
-        }
-
-        .book-button:hover {
-            background-color: #005bb5;
-        }
-
-
-        
-
-
-
-    </style>
+    .book-button:hover {
+      background-color: #FF8C00;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <h1>Grand Tech Conference 2025 - Webinar</h1>
+    <p class="event-info">This webinar aims to bring together technology enthusiasts, professionals,<br>
+        and learners to explore the latest trends and innovations in the tech industry.<br> 
+        Designed to provide valuable insights and foster meaningful discussions, the event offers<br> 
+        an excellent opportunity to learn from industry experts and connect with like-minded individuals.<br>
+        Join us for a powerful and engaging online experience.
+    </p></p>
+    <p class="venue">📍 International Tech Hall, New York<br>⏰ October 31, 2025 | 10:00 AM - 5:00 PM</p>
 
-    <div class="container">
-        <div class="header">
-            <h1>Event Booking</h1>
+    <div class="layout">
+      <div class="organizer">
+        <h2>Organizer</h2>
+        <img src="spe.png" alt="Organizer Image">
+        <p class="speaker-name">Alice Johnson</p>
+      </div>
+      <div>
+        <h2>Countdown</h2>
+        <div class="countdown-container" id="countdown">
+          <div class="countdown-box"><span id="days">00</span><br>Days</div>
+          <div class="countdown-box"><span id="hours">00</span><br>Hours</div>
+          <div class="countdown-box"><span id="minutes">00</span><br>Minutes</div>
+          <div class="countdown-box"><span id="seconds">00</span><br>Seconds</div>
         </div>
-
-        <div class="image-section">
-            <div class="image-box">
-                <img src="https://th.bing.com/th/id/OIP.H8Xw8rAxPGtR38ZKQTlS7gHaE8?w=540&h=360&rs=1&pid=ImgDetMain" alt="Information Image">
-                <p class="info">Webinar is a real-time presentation with audio, video, and/or multimedia components. It's a popular format for 
-                    information sharing across various industries and fields from B2B marketing sessions to classroom lectures.</p>
-            </div>
-            <div class="image-box speaker">
-                <p class="speaker-heading">Speaker</p>
-                <img src="avatar_3.jpg" alt="Speaker Image">
-                <p class="speaker-name">Speaker Name</p>
-            </div>
-        </div>
-
-        <section class="bg-cover" style="background-image: url(https://th.bing.com/th/id/OIP.ktqma6UEzONkbCMJ2JC2NgHaFS?w=1200&h=857&rs=1&pid=ImgDetMain);">
-            <div class="stats-section">
-                <div>
-                    <h1>45,00</h1>
-                    <p>Events Held</p>
-                </div>
-                <div>
-                    <h1>120k</h1>
-                    <p>Tickets Sold</p>
-                </div>
-                <div>
-                    <h1>30M+</h1>
-                    <p>Happy Clients</p>
-                </div>
-                <div>
-                    <h1>4,005</h1>
-                    <p>Event Growth</p>
-                </div>
-            </div>
-        </section>
-        <a href="bookeve.html" class="book-button">Book Now</a>
+      </div>
+      <div class="speaker">
+        <h2>Speaker</h2>
+        <img src="org.png" alt="Speaker Image">
+        <p class="speaker-name">John Doe</p>
+      </div>
     </div>
 
+    <div class="webinar-info">
+      <h2>Why Attend This Webinar?</h2>
+      <p>✔️ Gain insights from top industry professionals.</p>
+      <p>✔️ Learn about the latest advancements in technology.</p>
+      <p>✔️ Network with like-minded individuals and experts.</p>
+      <p>✔️ Enhance your career with valuable knowledge and skills.</p>
+    </div>
+    <a href="bookevent.html" class="book-button">Book Now</a>
+  </div>
+
+  <script>
+    function countdownTimer() {
+      const eventDate = new Date("October 31, 2025 10:00:00").getTime();
+      const timer = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+
+        if (distance < 0) {
+          clearInterval(timer);
+          document.getElementById("countdown").innerHTML = "Event Started!";
+          return;
+        }
+
+        document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
+        document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000);
+      }, 1000);
+    }
+    countdownTimer();
+  </script>
 </body>
 </html>
