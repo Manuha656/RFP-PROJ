@@ -3,93 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Organizer Event Registration</title>
+    <title>Event Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* General styles */
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #600028, #2d0065), url('background.jpg');
-            background-size: cover;
-            background-position: center;
-            background-blend-mode: multiply;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             padding: 20px;
-            animation: fadeIn 1.5s ease-in;
         }
 
-        /* Container Styling */
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
-            width: 70%;
-            max-width: 800px;
-            text-align: center;
-            animation: slideIn 1s ease-in-out;
-            margin: 40px 0;
-            transition: all 0.5s ease-in-out;
+        /* Main container */
+        .main-container {
+            display: flex;
+            max-width: 1000px;
+            width: 100%;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Form container */
+        .form-container {
+            padding: 50px;
+            width: 50%;
+            background: #fff;
+        }
+
+        /* Animated Right Side */
+        .animated-side {
+            width: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Animation Elements */
+        .animation-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .circle-1 {
+            width: 150px;
+            height: 150px;
+            top: 20%;
+            left: 30%;
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            width: 100px;
+            height: 100px;
+            bottom: 15%;
+            right: 25%;
+            animation-delay: 1s;
+        }
+
+        .circle-3 {
+            width: 70px;
+            height: 70px;
+            top: 60%;
+            left: 20%;
+            animation-delay: 2s;
+        }
+
+        .circle-4 {
+            width: 50px;
+            height: 50px;
+            top: 30%;
+            right: 20%;
+            animation-delay: 3s;
+        }
+
+        .event-icon {
+            font-size: 80px;
+            color: white;
+            z-index: 2;
+            animation: pulse 2s infinite;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(-20px) translateX(10px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         /* Form Styling */
         h2 {
-            margin-bottom: 20px;
-            color: #600028;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-size: 28px;
+            font-weight: 600;
+            text-align: center;
+            position: relative;
         }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            width: 80%;
-            margin: auto;
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
         }
 
         label {
-            text-align: left;
-            font-weight: bold;
-            margin-top: 15px;
-            color: #2d0065;
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 500;
         }
 
         input {
-            padding: 12px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
+            padding: 14px 15px;
+            width: 100%;
+            border: 1px solid #e0e0e0;
             border-radius: 8px;
-            font-size: 16px;
-            transition: 0.3s;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
         }
 
         input:focus {
-            border-color: #600028;
-            box-shadow: 0px 0px 10px rgba(96, 0, 40, 0.5);
-            transform: scale(1.02);
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+            outline: none;
+            background: #fff;
+        }
+
+        /* Phone number field styling */
+        .phone-input {
+            display: flex;
+            align-items: center;
+        }
+
+        .phone-prefix {
+            padding: 0 12px;
+            background: #f1f1f1;
+            border: 1px solid #e0e0e0;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .phone-input input {
+            border-radius: 0 8px 8px 0;
+            flex: 1;
+        }
+
+        /* Checkbox styling */
+        .terms {
+            display: flex;
+            align-items: center;
+            margin: 20px 0 25px;
+        }
+
+        .terms input {
+            width: auto;
+            margin: 0 10px 0 0;
+            flex-shrink: 0;
+        }
+
+        .terms label {
+            margin: 0;
+            color: #555;
+            font-weight: 400;
         }
 
         /* Button Styling */
         button {
-            margin-top: 20px;
-            padding: 12px;
-            background: #2d0065;
+            padding: 15px;
+            background: linear-gradient(to right, #667eea, #764ba2);
             color: white;
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 500;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
         }
 
         button:hover {
-            background: #600028;
-            transform: scale(1.05);
+            background: linear-gradient(to right, #5a6fd1, #6a4295);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
-        /* Pop-up Modal Styles */
+        /* Already member link */
+        .member-link {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Enhanced Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -98,152 +253,221 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(6px);
+            backdrop-filter: blur(5px);
             justify-content: center;
             align-items: center;
-            animation: fadeIn 0.5s ease-in-out;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
         }
 
         .modal-content {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
+            background: #ffffff;
+            padding: 40px;
             border-radius: 15px;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
-            width: 50%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 450px;
             text-align: center;
-            animation: zoomIn 0.3s ease-in-out;
             position: relative;
-            transition: all 0.3s ease-in-out;
+            animation: slideUp 0.4s ease;
         }
 
-        .modal-content h3 {
+        .modal-icon {
+            font-size: 60px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            animation: bounce 0.6s;
+        }
+
+        .modal-title {
             font-size: 24px;
-            color: #600028;
-            margin-bottom: 15px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
         }
 
-        .modal-content p {
-            font-size: 18px;
-            color: #333;
-            margin: 10px 0;
+        .modal-details {
+            text-align: left;
+            margin-top: 25px;
         }
 
-        .modal-content p span {
-            font-weight: bold;
-            color: #2d0065;
+        .detail-row {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: center;
         }
 
-        /* Close Button Styling */
+        .detail-label {
+            font-weight: 500;
+            color: #2c3e50;
+            min-width: 120px;
+        }
+
+        .detail-value {
+            color: #555;
+            flex-grow: 1;
+        }
+
         .close {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 28px;
-            font-weight: bold;
-            color: #600028;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            color: #aaa;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
         .close:hover {
-            color: #2d0065;
-            transform: scale(1.2);
-        }
-
-        /* Success message */
-        #message {
-            margin-top: 20px;
-            font-weight: bold;
-            color: #600028;
-            font-size: 18px;
-            animation: fadeIn 1s ease-in;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 900px) {
-            .container {
-                width: 90%;
-            }
-            form {
-                width: 100%;
-            }
-            .modal-content {
-                width: 80%;
-            }
+            color: #667eea;
+            transform: rotate(90deg);
         }
 
         /* Animations */
         @keyframes fadeIn {
-            from {
-                opacity: 0;
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .main-container {
+                flex-direction: column;
+                max-width: 500px;
             }
-            to {
-                opacity: 1;
+            .form-container, .animated-side {
+                width: 100%;
+            }
+            .animated-side {
+                padding: 30px;
+                min-height: 200px;
+            }
+            .form-container {
+                padding: 40px 30px;
             }
         }
 
-        @keyframes slideIn {
-            from {
-                transform: translateY(-20px);
-                opacity: 0;
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 30px 20px;
             }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes zoomIn {
-            from {
-                transform: scale(0.7);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
+            h2 {
+                font-size: 24px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Register Your Event</h2>
-        <form id="organizerForm">
-            <label for="organizerName">Organizer Name:</label>
-            <input type="text" id="organizerName" name="organizerName" required>
+    <div class="main-container">
+        <div class="form-container">
+            <h2>Event Registration</h2>
+            <form id="organizerForm">
+                <div class="form-group">
+                    <label for="organizerName">Organizer Name</label>
+                    <input type="text" id="organizerName" name="organizerName" placeholder="Enter your name" required>
+                </div>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
 
-            <label for="phone">Phone Number:</label>
-            <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" title="Enter a valid 10-digit number">
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <div class="phone-input">
+                        <div class="phone-prefix">+91</div>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter 10-digit number" pattern="[0-9]{10}" required>
+                    </div>
+                </div>
 
-            <label for="eventName">Event Name:</label>
-            <input type="text" id="eventName" name="eventName" required>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Create a password" required>
+                </div>
 
-            <label for="eventDate">Event Date:</label>
-            <input type="date" id="eventDate" name="eventDate" required>
+                <div class="form-group">
+                    <label for="eventName">Event Name</label>
+                    <input type="text" id="eventName" name="eventName" placeholder="Enter event name" required>
+                </div>
 
-            <label for="availableTickets">Available Tickets:</label>
-            <input type="number" id="availableTickets" name="availableTickets" min="1" required>
+                <div class="form-group">
+                    <label for="eventDate">Event Date</label>
+                    <input type="date" id="eventDate" name="eventDate" required>
+                </div>
 
-            <button type="submit">Register Event</button>
-        </form>
+                <div class="form-group">
+                    <label for="availableTickets">Available Tickets</label>
+                    <input type="number" id="availableTickets" name="availableTickets" min="1" placeholder="Number of tickets" required>
+                </div>
 
-        <p id="message"></p>
+                <div class="terms">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">I agree all statements in Terms of service</label>
+                </div>
+
+                <button type="submit">Register Event</button>
+            </form>
+
+            <div class="member-link">Not logged in? <a href="#">Sign in to continue</a></div>
+        </div>
+
+        <div class="animated-side">
+            <div class="animation-circle circle-1"></div>
+            <div class="animation-circle circle-2"></div>
+            <div class="animation-circle circle-3"></div>
+            <div class="animation-circle circle-4"></div>
+            <div class="event-icon">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+        </div>
     </div>
 
-    <!-- Pop-up Modal -->
-    <div id="popupModal" class="modal hidden">
+    <!-- Enhanced Pop-up Modal -->
+    <div id="popupModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3>Event Registered Successfully 🎉</h3>
-            <p><strong>Organizer:</strong> <span id="displayOrganizer"></span></p>
-            <p><strong>Email:</strong> <span id="displayEmail"></span></p>
-            <p><strong>Phone:</strong> <span id="displayPhone"></span></p>
-            <p><strong>Event Name:</strong> <span id="displayEvent"></span></p>
-            <p><strong>Event Date:</strong> <span id="displayDate"></span></p>
-            <p><strong>Tickets Available:</strong> <span id="displayTickets"></span></p>
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="modal-title">Registration Successful!</h3>
+            
+            <div class="modal-details">
+                <div class="detail-row">
+                    <span class="detail-label">Organizer:</span>
+                    <span class="detail-value" id="displayOrganizer"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Email:</span>
+                    <span class="detail-value" id="displayEmail"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Phone:</span>
+                    <span class="detail-value" id="displayPhone">+91 </span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Event Name:</span>
+                    <span class="detail-value" id="displayEvent"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Event Date:</span>
+                    <span class="detail-value" id="displayDate"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Tickets Available:</span>
+                    <span class="detail-value" id="displayTickets"></span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -251,45 +475,73 @@
         document.getElementById("organizerForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
-            let organizerName = document.getElementById("organizerName").value.trim();
-            let email = document.getElementById("email").value.trim();
-            let phone = document.getElementById("phone").value.trim();
-            let eventName = document.getElementById("eventName").value.trim();
-            let eventDate = document.getElementById("eventDate").value;
-            let availableTickets = parseInt(document.getElementById("availableTickets").value);
+            // Get form values
+            const organizerName = document.getElementById("organizerName").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const password = document.getElementById("password").value;
+            const eventName = document.getElementById("eventName").value.trim();
+            const eventDate = document.getElementById("eventDate").value;
+            const availableTickets = document.getElementById("availableTickets").value;
 
-            if (organizerName === "" || email === "" || phone === "" || eventName === "" || eventDate === "" || isNaN(availableTickets) || availableTickets < 1) {
-                alert("Please fill in all fields correctly.");
+            // Validation
+            if (!organizerName || !email || !phone || !password || !eventName || !eventDate || !availableTickets) {
+                alert("Please fill in all fields.");
                 return;
             }
 
-            // Show event details in the modal
+            if (phone.length !== 10 || !/^\d+$/.test(phone)) {
+                alert("Please enter a valid 10-digit phone number.");
+                return;
+            }
+
+            if (!document.getElementById("terms").checked) {
+                alert("You must agree to the terms of service.");
+                return;
+            }
+
+            // Display in modal
             document.getElementById("displayOrganizer").textContent = organizerName;
             document.getElementById("displayEmail").textContent = email;
-            document.getElementById("displayPhone").textContent = phone;
+            document.getElementById("displayPhone").textContent += phone;
             document.getElementById("displayEvent").textContent = eventName;
-            document.getElementById("displayDate").textContent = eventDate;
+            document.getElementById("displayDate").textContent = new Date(eventDate).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
             document.getElementById("displayTickets").textContent = availableTickets;
 
-            let modal = document.getElementById("popupModal");
-            modal.style.display = "flex";
+            // Show modal
+            document.getElementById("popupModal").style.display = "flex";
 
+            // Reset form
             this.reset();
         });
 
-        // Close modal when clicking the close button
+        // Close modal
         document.querySelector(".close").addEventListener("click", function() {
             document.getElementById("popupModal").style.display = "none";
+            resetModal();
         });
 
-        // Close modal when clicking outside of the content
+        // Close when clicking outside
         window.addEventListener("click", function(event) {
-            let modal = document.getElementById("popupModal");
-            if (event.target === modal) {
-                modal.style.display = "none";
+            if (event.target === document.getElementById("popupModal")) {
+                document.getElementById("popupModal").style.display = "none";
+                resetModal();
             }
         });
 
+        // Reset modal content
+        function resetModal() {
+            document.getElementById("displayPhone").textContent = "+91 ";
+        }
+
+        // Phone number validation
+        document.getElementById("phone").addEventListener("input", function(e) {
+            this.value = this.value.replace(/\D/g, '').slice(0, 10);
+        });
     </script>
 </body>
 </html>
