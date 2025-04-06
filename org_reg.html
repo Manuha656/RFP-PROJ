@@ -164,6 +164,7 @@
             font-size: 14px;
             transition: all 0.3s ease;
             background: #f9f9f9;
+            box-sizing: border-box;
         }
 
         input:focus {
@@ -177,6 +178,7 @@
         .phone-input {
             display: flex;
             align-items: center;
+            width: 100%;
         }
 
         .phone-prefix {
@@ -228,6 +230,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             letter-spacing: 0.5px;
+            width: 100%;
         }
 
         button:hover {
@@ -236,12 +239,24 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
-        /* Already member link */
+        /* Sign in link */
         .member-link {
             margin-top: 25px;
             text-align: center;
             font-size: 14px;
             color: #555;
+        }
+
+        .member-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .member-link a:hover {
+            color: #764ba2;
+            text-decoration: underline;
         }
 
         /* Enhanced Modal Styles */
@@ -419,7 +434,7 @@
                 <button type="submit">Register Event</button>
             </form>
 
-            <div class="member-link">Not logged in? <a href="login.html">Sign in to continue</a></div>
+            <div class="member-link">Not logged in? <a href="login.html">Sign in </a>to continue</div>
         </div>
 
         <div class="animated-side">
