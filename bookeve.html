@@ -3,93 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Event Booking</title>
+    <title>Book Your Event</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* General styles */
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #600028, #2d0065), url('background.jpg');
-            background-size: cover;
-            background-position: center;
-            background-blend-mode: multiply;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             padding: 20px;
-            animation: fadeIn 1.5s ease-in;
         }
 
-        /* Container Styling */
-        .container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
-            width: 70%;
+        /* Main container */
+        .main-container {
+            display: flex;
             max-width: 800px;
-            text-align: center;
-            animation: slideIn 1s ease-in-out;
-            margin: 40px 0;
-            transition: all 0.5s ease-in-out;
+            width: 100%;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Form container */
+        .form-container {
+            padding: 40px;
+            width: 60%;
+            background: #fff;
+        }
+
+        /* Animated Right Side */
+        .animated-side {
+            width: 40%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Animation Elements */
+        .animation-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .circle-1 {
+            width: 150px;
+            height: 150px;
+            top: 20%;
+            left: 30%;
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            width: 100px;
+            height: 100px;
+            bottom: 15%;
+            right: 25%;
+            animation-delay: 1s;
+        }
+
+        .circle-3 {
+            width: 70px;
+            height: 70px;
+            top: 60%;
+            left: 20%;
+            animation-delay: 2s;
+        }
+
+        .event-icon {
+            font-size: 60px;
+            color: white;
+            z-index: 2;
+            animation: pulse 2s infinite;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(-20px) translateX(10px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         /* Form Styling */
         h2 {
-            margin-bottom: 20px;
-            color: #600028;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            position: relative;
         }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            width: 80%;
-            margin: auto;
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
         }
 
         label {
-            text-align: left;
-            font-weight: bold;
-            margin-top: 15px;
-            color: #2d0065;
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 500;
         }
 
         input {
-            padding: 12px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
+            padding: 12px 15px;
+            width: 100%;
+            border: 1px solid #e0e0e0;
             border-radius: 8px;
-            font-size: 16px;
-            transition: 0.3s;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
         }
 
         input:focus {
-            border-color: #600028;
-            box-shadow: 0px 0px 10px rgba(96, 0, 40, 0.5);
-            transform: scale(1.02);
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+            outline: none;
+            background: #fff;
         }
 
         /* Button Styling */
         button {
-            margin-top: 20px;
             padding: 12px;
-            background: #2d0065;
+            background: linear-gradient(to right, #667eea, #764ba2);
             color: white;
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 500;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
         }
 
         button:hover {
-            background: #600028;
-            transform: scale(1.05);
+            background: linear-gradient(to right, #5a6fd1, #6a4295);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
-        /* Pop-up Modal Styles */
+        /* Member link styling */
+        .member-link {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .member-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .member-link a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        /* Enhanced Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -97,109 +214,214 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
             justify-content: center;
             align-items: center;
-            animation: fadeIn 0.5s ease-in-out;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
         }
 
         .modal-content {
             background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
-            width: 50%;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 450px;
             text-align: center;
-            animation: slideIn 0.5s ease-in-out;
+            position: relative;
+            animation: slideUp 0.4s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
-        .close {
-            float: right;
+        .modal-icon {
+            font-size: 60px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            animation: bounce 0.6s;
+        }
+
+        .modal-title {
             font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .modal-message {
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .modal-details {
+            text-align: left;
+            margin-top: 25px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+
+        .detail-label {
+            font-weight: 500;
+            color: #2c3e50;
+            min-width: 120px;
+        }
+
+        .detail-value {
+            color: #555;
+            flex-grow: 1;
+        }
+
+        .close-btn {
+            padding: 10px 25px;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 30px;
             cursor: pointer;
-            color: #600028;
-        }
-
-        .close:hover {
-            color: #2d0065;
-        }
-
-        /* Success message */
-        #message {
+            font-weight: 500;
             margin-top: 20px;
-            font-weight: bold;
-            color: #600028;
-            font-size: 18px;
-            animation: fadeIn 1s ease-in;
+            transition: all 0.3s ease;
         }
 
-        /* Responsive Design */
-        @media (max-width: 900px) {
-            .container {
-                width: 90%;
-            }
-            form {
-                width: 100%;
-            }
-            .modal-content {
-                width: 80%;
-            }
+        .close-btn:hover {
+            background: linear-gradient(to right, #5a6fd1, #6a4295);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
         /* Animations */
         @keyframes fadeIn {
-            from {
-                opacity: 0;
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                transform: translateY(20px) rotateX(30deg);
+                opacity: 0; 
             }
-            to {
-                opacity: 1;
+            to { 
+                transform: translateY(0) rotateX(0);
+                opacity: 1; 
             }
         }
 
-        @keyframes slideIn {
-            from {
-                transform: translateY(-20px);
-                opacity: 0;
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
             }
-            to {
-                transform: translateY(0);
-                opacity: 1;
+            .form-container, .animated-side {
+                width: 100%;
+            }
+            .animated-side {
+                padding: 30px;
+                min-height: 200px;
+            }
+            .form-container {
+                padding: 30px;
             }
         }
 
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 25px 20px;
+            }
+            h2 {
+                font-size: 22px;
+            }
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Book Your Event</h2>
-        <form id="bookingForm">
-            <label for="name">Full Name:</label>
-            <input type="text" id="name" name="name" required>
+    <div class="main-container">
+        <div class="form-container">
+            <h2>Book Your Event</h2>
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                </div>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
 
-            <label for="phone">Phone Number:</label>
-            <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" title="Enter a valid 10-digit number">
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                </div>
 
-            <label for="tickets">Number of Tickets:</label>
-            <input type="number" id="tickets" name="tickets" min="1" required>
+                <div class="form-group">
+                    <label for="tickets">Number of Tickets</label>
+                    <input type="number" id="tickets" name="tickets" min="1" placeholder="How many tickets?" required>
+                </div>
 
-            <button type="submit">Book Now</button>
-        </form>
+                <button type="submit">Book Now</button>
+                
+                <div class="member-link">Not logged in? <a href="login.html">Sign in</a> to continue</div>
+            </form>
+        </div>
 
-        <p id="message"></p>
+        <div class="animated-side">
+            <div class="animation-circle circle-1"></div>
+            <div class="animation-circle circle-2"></div>
+            <div class="animation-circle circle-3"></div>
+            <div class="event-icon">
+                <i class="fas fa-ticket-alt"></i>
+            </div>
+        </div>
     </div>
 
-    <!-- Pop-up Modal -->
-    <div id="popupModal" class="modal hidden">
+    <!-- Enhanced Pop-up Modal -->
+    <div id="popupModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>Booking Confirmed 🎟️</h3>
-            <p><strong>Name:</strong> <span id="displayName"></span></p>
-            <p><strong>Email:</strong> <span id="displayEmail"></span></p>
-            <p><strong>Phone:</strong> <span id="displayPhone"></span></p>
-            <p><strong>Tickets:</strong> <span id="displayTickets"></span></p>
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="modal-title">Booking Confirmed!</h3>
+            <p class="modal-message">Thank you for your booking. We've sent a confirmation to your email.</p>
+            
+            <div class="modal-details">
+                <div class="detail-row">
+                    <span class="detail-label">Name:</span>
+                    <span class="detail-value" id="displayName"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Email:</span>
+                    <span class="detail-value" id="displayEmail"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Phone:</span>
+                    <span class="detail-value" id="displayPhone"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Tickets:</span>
+                    <span class="detail-value" id="displayTickets"></span>
+                </div>
+            </div>
+
+            <button class="close-btn">Close</button>
         </div>
     </div>
 
@@ -207,43 +429,47 @@
         document.getElementById("bookingForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
-            let name = document.getElementById("name").value.trim();
-            let email = document.getElementById("email").value.trim();
-            let phone = document.getElementById("phone").value.trim();
-            let tickets = parseInt(document.getElementById("tickets").value);
+            // Get form values
+            const fullName = document.getElementById("fullName").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const tickets = document.getElementById("tickets").value;
 
-            let availableTickets = 10; // Change this as needed
-
-            if (name === "" || email === "" || phone === "" || isNaN(tickets) || tickets < 1) {
-                alert("Please fill in all fields correctly.");
+            // Validation
+            if (!fullName || !email || !phone || !tickets) {
+                alert("Please fill in all fields.");
                 return;
             }
 
-            if (tickets > availableTickets) {
-                document.getElementById("message").textContent = `Only ${availableTickets} tickets are available!`;
-                document.getElementById("message").style.color = "red";
-                return;
-            }
-
-            // Show booking details in the modal
-            document.getElementById("displayName").textContent = name;
+            // Display in modal
+            document.getElementById("displayName").textContent = fullName;
             document.getElementById("displayEmail").textContent = email;
             document.getElementById("displayPhone").textContent = phone;
-            document.getElementById("displayTickets").textContent = tickets;
+            document.getElementById("displayTickets").textContent = tickets + (tickets > 1 ? " tickets" : " ticket");
 
+            // Show modal
             document.getElementById("popupModal").style.display = "flex";
 
-            document.getElementById("message").textContent = "Your event booking is confirmed!";
-            document.getElementById("message").style.color = "#600028";
-
+            // Reset form
             this.reset();
         });
 
-        // Close modal when clicking on the close button
-        document.querySelector(".close").addEventListener("click", function() {
+        // Close modal
+        document.querySelector(".close-btn").addEventListener("click", function() {
             document.getElementById("popupModal").style.display = "none";
         });
 
+        // Close when clicking outside
+        window.addEventListener("click", function(event) {
+            if (event.target === document.getElementById("popupModal")) {
+                document.getElementById("popupModal").style.display = "none";
+            }
+        });
+
+        // Phone number validation
+        document.getElementById("phone").addEventListener("input", function(e) {
+            this.value = this.value.replace(/\D/g, '');
+        });
     </script>
 </body>
 </html>
