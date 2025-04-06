@@ -297,13 +297,23 @@
         .modal-title {
             font-size: 24px;
             color: #2c3e50;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-weight: 600;
+        }
+
+        .modal-message {
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.6;
         }
 
         .modal-details {
             text-align: left;
             margin-top: 25px;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         .detail-row {
@@ -315,33 +325,38 @@
         .detail-label {
             font-weight: 500;
             color: #2c3e50;
-            min-width: 120px;
+            min-width: 100px;
         }
 
         .detail-value {
             color: #555;
             flex-grow: 1;
+            text-align: right;
         }
 
-        .close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 24px;
-            color: #aaa;
+        .close-btn {
+            padding: 12px 30px;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 30px;
             cursor: pointer;
+            font-weight: 500;
+            margin-top: 25px;
             transition: all 0.3s ease;
+            font-size: 16px;
         }
 
-        .close:hover {
-            color: #667eea;
-            transform: rotate(90deg);
+        .close-btn:hover {
+            background: linear-gradient(to right, #5a6fd1, #6a4295);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
         /* Animations */
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         @keyframes slideUp {
@@ -355,30 +370,131 @@
             60% { transform: translateY(-10px); }
         }
 
-        /* Responsive Design */
-        @media (max-width: 900px) {
+        /* Responsive Design - Mobile First Approach */
+        @media (max-width: 992px) {
             .main-container {
                 flex-direction: column;
-                max-width: 500px;
+                max-width: 600px;
             }
             .form-container, .animated-side {
                 width: 100%;
             }
             .animated-side {
-                padding: 30px;
-                min-height: 200px;
+                padding: 40px;
+                min-height: 250px;
+                order: -1; /* Move to top on mobile */
             }
             .form-container {
                 padding: 40px 30px;
             }
+            .event-icon {
+                font-size: 70px;
+            }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            .main-container {
+                border-radius: 12px;
+            }
             .form-container {
+                padding: 30px 25px;
+            }
+            h2 {
+                font-size: 26px;
+                margin-bottom: 25px;
+            }
+            h2::after {
+                width: 40px;
+                height: 2px;
+            }
+            input {
+                padding: 12px 15px;
+            }
+            .modal-content {
                 padding: 30px 20px;
+            }
+            .modal-title {
+                font-size: 22px;
+            }
+            .detail-label {
+                min-width: 90px;
+                font-size: 13px;
+            }
+            .detail-value {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .form-container {
+                padding: 25px 20px;
             }
             h2 {
                 font-size: 24px;
+            }
+            .phone-prefix {
+                padding: 0 10px;
+                font-size: 13px;
+            }
+            .terms label {
+                font-size: 13px;
+            }
+            .member-link {
+                font-size: 13px;
+            }
+            .modal-content {
+                padding: 25px 15px;
+            }
+            .modal-title {
+                font-size: 20px;
+            }
+            .modal-message {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            .modal-details {
+                padding: 15px;
+            }
+            .close-btn {
+                padding: 10px 25px;
+                font-size: 15px;
+            }
+            .animation-circle {
+                display: none; /* Hide circles on very small screens */
+            }
+        }
+
+        @media (max-width: 400px) {
+            .form-container {
+                padding: 20px 15px;
+            }
+            h2 {
+                font-size: 22px;
+            }
+            input {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+            label {
+                font-size: 13px;
+            }
+            button {
+                padding: 12px;
+                font-size: 15px;
+            }
+            .modal-icon {
+                font-size: 50px;
+            }
+            .detail-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .detail-value {
+                text-align: left;
+                margin-top: 5px;
             }
         }
     </style>
@@ -431,7 +547,7 @@
                     <label for="terms">I agree all statements in Terms of service</label>
                 </div>
 
-                <button type="submit">Register Event</button>
+                <button type="submit">Register</button>
             </form>
 
             <div class="member-link">Not logged in? <a href="login.html">Sign in </a>to continue</div>
@@ -451,11 +567,11 @@
     <!-- Enhanced Pop-up Modal -->
     <div id="popupModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
             <div class="modal-icon">
                 <i class="fas fa-check-circle"></i>
             </div>
             <h3 class="modal-title">Registration Successful!</h3>
+            <p class="modal-message">Thank you for your registration. We've sent a confirmation to your email.</p>
             
             <div class="modal-details">
                 <div class="detail-row">
@@ -479,10 +595,12 @@
                     <span class="detail-value" id="displayDate"></span>
                 </div>
                 <div class="detail-row">
-                    <span class="detail-label">Tickets Available:</span>
+                    <span class="detail-label">Tickets:</span>
                     <span class="detail-value" id="displayTickets"></span>
                 </div>
             </div>
+
+            <button class="close-btn">Close</button>
         </div>
     </div>
 
@@ -500,8 +618,10 @@
             const availableTickets = document.getElementById("availableTickets").value;
 
             // Validation
-            if (!organizerName || !email || !phone || !password || !eventName || !eventDate || !availableTickets) {
-                alert("Please fill in all fields.");
+            if (organizerName === "" || email === "" || phone === "" || 
+                password === "" || eventName === "" || eventDate === "" || 
+                availableTickets === "" || isNaN(availableTickets)) {
+                alert("Please fill in all fields correctly.");
                 return;
             }
 
@@ -515,35 +635,36 @@
                 return;
             }
 
-            // Display in modal
+            // Show details in the modal
             document.getElementById("displayOrganizer").textContent = organizerName;
             document.getElementById("displayEmail").textContent = email;
             document.getElementById("displayPhone").textContent += phone;
             document.getElementById("displayEvent").textContent = eventName;
-            document.getElementById("displayDate").textContent = new Date(eventDate).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
+            document.getElementById("displayDate").textContent = new Date(eventDate).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
             });
             document.getElementById("displayTickets").textContent = availableTickets;
 
-            // Show modal
-            document.getElementById("popupModal").style.display = "flex";
+            let modal = document.getElementById("popupModal");
+            modal.style.display = "flex";
 
             // Reset form
             this.reset();
         });
 
-        // Close modal
-        document.querySelector(".close").addEventListener("click", function() {
+        // Close modal when clicking the close button
+        document.querySelector(".close-btn").addEventListener("click", function() {
             document.getElementById("popupModal").style.display = "none";
             resetModal();
         });
 
-        // Close when clicking outside
+        // Close modal when clicking outside of the content
         window.addEventListener("click", function(event) {
-            if (event.target === document.getElementById("popupModal")) {
-                document.getElementById("popupModal").style.display = "none";
+            let modal = document.getElementById("popupModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
                 resetModal();
             }
         });
