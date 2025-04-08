@@ -541,16 +541,59 @@ footer a {
 
 
 
+/* Base Styles */
+.events-section {
+    padding: 80px 0;
+    background-color: #f9fafc;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Section Header */
+.section-intro {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-intro h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2a2a2a;
+    margin-bottom: 15px;
+}
+
+.divider {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #6e45e2, #88d3ce);
+    margin: 0 auto 20px;
+    border-radius: 2px;
+}
+
+.section-intro p {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
 
 /* Events Grid */
 .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 25px;
     margin-bottom: 40px;
+    justify-items: center;
 }
 
 .event-card {
+    width: 100%;
+    max-width: 350px;
     height: 250px;
     border-radius: 10px;
     overflow: hidden;
@@ -559,6 +602,10 @@ footer a {
     transition: all 0.3s ease;
     background-size: cover;
     background-position: center;
+}
+
+.hidden-events {
+    display: none;
 }
 
 .event-card:hover {
@@ -641,6 +688,7 @@ footer a {
     font-weight: 600;
     text-decoration: none;
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .view-all-button:hover {
@@ -653,16 +701,16 @@ footer a {
 /* Responsive Adjustments */
 @media (max-width: 992px) {
     .events-grid {
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 768px) {
-    .section-title {
+    .section-intro h1 {
         font-size: 2rem;
     }
     
-    .section-subtitle {
+    .section-intro p {
         font-size: 1rem;
     }
     
@@ -676,11 +724,20 @@ footer a {
         padding: 60px 0;
     }
     
-    .section-header {
-        margin-bottom: 40px;
-    }
-    
     .events-grid {
         grid-template-columns: 1fr;
     }
+    
+    .event-card {
+        max-width: 100%;
+    }
+}
+
+/* JavaScript for showing hidden events */
+.show-all .hidden-events {
+    display: block;
+}
+
+.show-all .view-all-button {
+    display: none;
 }
