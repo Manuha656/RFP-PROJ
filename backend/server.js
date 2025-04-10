@@ -11,6 +11,10 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
