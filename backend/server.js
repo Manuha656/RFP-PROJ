@@ -19,9 +19,9 @@ mongoose.connect(process.env.MONGODB_URI, {
 .then(() => console.log("✅ Connected to MongoDB Atlas"))
 .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-// Serve login.html from root
+// Serve login.html from frontend folder
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'login.html'));
+  res.sendFile(path.join(__dirname, '../frontend/login.html'));
 });
 
 // TEMPORARY: Insert a test user
@@ -30,7 +30,7 @@ app.get('/addtestuser', async (req, res) => {
     const user = new User({
       username: "testuser",
       email: "test@example.com",
-      password: "1234" // plain password for now
+      password: "1234"
     });
     await user.save();
     res.send("✅ Test user created.");
@@ -40,8 +40,7 @@ app.get('/addtestuser', async (req, res) => {
   }
 });
 
-
-// Login POST route
+// Login route
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
@@ -62,6 +61,7 @@ app.post('/login', async (req, res) => {
   }
 });
 
+// Register route
 app.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -80,13 +80,12 @@ app.post('/register', async (req, res) => {
 
     res.send(`✅ User registered successfully! Welcome, ${username}`);
   } catch (err) {
-    console.error("❌ Registration error:", err); // 👈 important
+    console.error("❌ Registration error:", err);
     res.status(500).send('❌ Server error while registering.');
   }
 });
 
-
-// Start server
+// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
