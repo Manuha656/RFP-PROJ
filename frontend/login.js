@@ -72,59 +72,59 @@ loginBtn.addEventListener('click', () => {
 //   });
 // });
 
-const container = document.querySelector('.container');
-const registerBtn = document.querySelector('.register-btn');
-const loginBtn = document.querySelector('.login-btn');
+// const container = document.querySelector('.container');
+// const registerBtn = document.querySelector('.register-btn');
+// const loginBtn = document.querySelector('.login-btn');
 
-registerBtn.addEventListener('click', () => {
-    container.classList.add('active');
-});
+// registerBtn.addEventListener('click', () => {
+//     container.classList.add('active');
+// });
 
-loginBtn.addEventListener('click', () => {
-    container.classList.remove('active');
-});
+// loginBtn.addEventListener('click', () => {
+//     container.classList.remove('active');
+// });
 
-// LOGIN
-document.getElementById('loginForm')?.addEventListener('submit', async function (e) {
-    e.preventDefault();
+// // LOGIN
+// document.getElementById('loginForm')?.addEventListener('submit', async function (e) {
+//     e.preventDefault();
 
-    const username = this.username.value;
-    const password = this.password.value;
+//     const username = this.username.value;
+//     const password = this.password.value;
 
-    try {
-        const res = await fetch('https://rfp-proj.onrender.com/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-        });
+//     try {
+//         const res = await fetch('https://rfp-proj.onrender.com/login', {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({ username, password })
+//         });
 
-        const message = await res.text();
-        alert(message);
-    } catch (err) {
-        console.error('❌ Login Error:', err);
-        alert('❌ Login failed.');
-    }
-});
+//         const message = await res.text();
+//         alert(message);
+//     } catch (err) {
+//         console.error('❌ Login Error:', err);
+//         alert('❌ Login failed.');
+//     }
+// });
 
-// REGISTER
-document.getElementById('registerForm')?.addEventListener('submit', async function (e) {
-    e.preventDefault();
+// // REGISTER
+// document.getElementById('registerForm')?.addEventListener('submit', async function (e) {
+//     e.preventDefault();
 
-    const username = this.username.value;
-    const email = this.email.value;
-    const password = this.password.value;
+//     const username = this.username.value;
+//     const email = this.email.value;
+//     const password = this.password.value;
 
-    try {
-        const res = await fetch('https://rfp-proj.onrender.com/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, email, password })
-        });
+//     try {
+//         const res = await fetch('https://rfp-proj.onrender.com/register', {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({ username, email, password })
+//         });
 
-        const message = await res.text();
-        alert(message);
-    } catch (err) {
-        console.error('❌ Registration Error:', err);
-        alert('❌ Registration failed.');
-    }
-});
+//         const message = await res.text();
+//         alert(message);
+//     } catch (err) {
+//         console.error('❌ Registration Error:', err);
+//         alert('❌ Registration failed.');
+//     }
+// });
