@@ -237,3 +237,19 @@ form{ width: 100%; }
 
     .toggle-panel h1{font-size: 30px; }
 }
+/* Add these styles to your existing CSS */
+.input-box .show-password {
+    right: 45px;
+    cursor: pointer;
+    transition: 0.3s;
+    color: #777;
+}
+
+.input-box .show-password:hover {
+    color: #7d23a1;
+}
+
+/* Adjust the lock icon position when eye icon is present */
+.input-box i.bxs-lock-alt {
+    right: 45px;
+}
