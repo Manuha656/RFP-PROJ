@@ -100,90 +100,76 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
+const cors = require('cors');
 const User = require('./User');
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log("✅ Connected to MongoDB Atlas"))
-.catch((err) => console.error("❌ MongoDB connection error:", err));
+  .then(() => console.log('✅ Connected to MongoDB Atlas'))
+  .catch((err) => console.error('❌ MongoDB connection error:', err));
 
-// Serve login.html from frontend
+// Route: Serve login page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/login.html'));
 });
 
-// Login Route
-app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-
-  try {
-    if (!username || !password) {
-      return res.status(400).json({ success: false, message: "❌ Username and password required." });
-    }
-
-    const user = await User.findOne({ username, password });
-    if (user) {
-      return res.json({ success: true, message: `✅ Login successful! Welcome, ${user.username}` });
-    } else {
-      return res.json({ success: false, message: "❌ Invalid username or password." });
-    }
-  } catch (err) {
-    console.error("❌ Login error:", err);
-    res.status(500).json({ success: false, message: "❌ Server error during login." });
-  }
-});
-
-// Register Route
+// Route: Register
 app.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
 
-  try {
-    if (!username || !email || !password) {
-      return res.status(400).json({ success: false, message: "❌ All fields are required." });
-    }
+  if (!username || !email || !password) {
+    return res.status(400).json({ success: false, message: '❌ All fields are required.' });
+  }
 
-    const existingUser = await User.findOne({ username });
+  try {
+    const existingUser = await User.findOne({ $or: [{ username }, { email }] });
     if (existingUser) {
-      return res.json({ success: false, message: "❌ Username already taken." });
+      return res.status(409).json({ success: false, message: '⚠️ Username or email already exists.' });
     }
 
     const newUser = new User({ username, email, password });
     await newUser.save();
-
-    res.json({ success: true, message: `✅ Registration successful! Welcome, ${username}` });
+    return res.status(201).json({ success: true, message: '✅ Registration successful!' });
   } catch (err) {
-    console.error("❌ Registration error:", err);
-    res.status(500).json({ success: false, message: "❌ Server error while registering." });
+    console.error(err);
+    return res.status(500).json({ success: false, message: '❌ Registration failed. Try again later.' });
   }
 });
 
-// Add a test user (Optional)
-app.get('/addtestuser', async (req, res) => {
+// Route: Login
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ success: false, message: '❌ Username and password required.' });
+  }
+
   try {
-    const user = new User({
-      username: "testuser",
-      email: "test@example.com",
-      password: "1234"
-    });
-    await user.save();
-    res.send("✅ Test user created.");
+    const user = await User.findOne({ username, password });
+    if (user) {
+      return res.json({ success: true, message: `✅ Login successful! Welcome, ${user.username}` });
+    } else {
+      return res.status(401).json({ success: false, message: '❌ Invalid credentials.' });
+    }
   } catch (err) {
     console.error(err);
-    res.send("❌ Error creating user.");
+    return res.status(500).json({ success: false, message: '❌ Login failed. Please try again later.' });
   }
 });
 
 // Start Server
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(`🚀 Server is running at http://localhost:${PORT}`);
 });
