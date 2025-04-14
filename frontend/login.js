@@ -72,6 +72,62 @@ loginBtn.addEventListener('click', () => {
 //   });
 // });
 
+function showPopup(message) {
+  const popup = document.getElementById('popup');
+  const popupMessage = document.getElementById('popup-message');
+  popupMessage.textContent = message;
+  popup.classList.remove('hidden');
+}
+
+function closePopup() {
+  document.getElementById('popup').classList.add('hidden');
+}
+
+// LOGIN
+document.getElementById('loginForm')?.addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const username = this.username.value;
+  const password = this.password.value;
+
+  try {
+    const res = await fetch('https://rfp-proj.onrender.com/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+
+    const message = await res.text();
+    showPopup(message);
+  } catch (err) {
+    console.error('❌ Login Error:', err);
+    showPopup('❌ Login failed. Try again.');
+  }
+});
+
+// REGISTER
+document.getElementById('registerForm')?.addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const username = this.username.value;
+  const email = this.email.value;
+  const password = this.password.value;
+
+  try {
+    const res = await fetch('https://rfp-proj.onrender.com/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password })
+    });
+
+    const message = await res.text();
+    showPopup(message);
+  } catch (err) {
+    console.error('❌ Registration Error:', err);
+    showPopup('❌ Registration failed. Try again.');
+  }
+});
+
 // const container = document.querySelector('.container');
 // const registerBtn = document.querySelector('.register-btn');
 // const loginBtn = document.querySelector('.login-btn');
