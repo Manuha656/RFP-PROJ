@@ -133,6 +133,32 @@ function closePopup() {
   document.getElementById("loginForm").reset();
   document.getElementById("registerForm").reset();
 }
+let lastForm = null; // track which form was submitted
+
+// Login Submit
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  lastForm = 'login';
+  // rest of the code...
+});
+
+// Register Submit
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  lastForm = 'register';
+  // rest of the code...
+});
+
+function closePopup() {
+  document.getElementById("popup").classList.add("hidden");
+
+  // Reset only the last used form
+  if (lastForm === 'login') {
+    document.getElementById("loginForm").reset();
+  } else if (lastForm === 'register') {
+    document.getElementById("registerForm").reset();
+  }
+}
 
 
 // const container = document.querySelector('.container');
