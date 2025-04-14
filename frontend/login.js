@@ -72,22 +72,22 @@ loginBtn.addEventListener('click', () => {
 //   });
 // });
 
-const container = document.querySelector('.container');
-const registerBtn = document.querySelector('.register-btn');
-const loginBtn = document.querySelector('.login-btn');
 
-registerBtn.addEventListener('click', () => {
-  container.classList.add('active');
-});
+// Show popup
+function showPopup(message) {
+  const popup = document.getElementById("popup");
+  const messageBox = document.getElementById("popup-message");
+  messageBox.innerText = message;
+  popup.classList.remove("hidden");
+}
 
-loginBtn.addEventListener('click', () => {
-  container.classList.remove('active');
-});
+function closePopup() {
+  document.getElementById("popup").classList.add("hidden");
+}
 
-// 🔐 Login Form Handling
+// Login Submit
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-
   const username = document.getElementById('loginUsername').value;
   const password = document.getElementById('loginPassword').value;
 
@@ -97,20 +97,17 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
     });
-
     const data = await res.json();
-    alert(data.message);
-
+    showPopup(data.message);
   } catch (err) {
     console.error(err);
-    alert('❌ Login failed. Please try again later.');
+    showPopup('❌ Login failed. Please try again later.');
   }
 });
 
-// 📝 Register Form Handling
+// Register Submit
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-
   const username = document.getElementById('registerUsername').value;
   const email = document.getElementById('registerEmail').value;
   const password = document.getElementById('registerPassword').value;
@@ -121,13 +118,11 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, email, password })
     });
-
     const data = await res.json();
-    alert(data.message);
-
+    showPopup(data.message);
   } catch (err) {
     console.error(err);
-    alert('❌ Registration failed. Please try again later.');
+    showPopup('❌ Registration failed. Please try again later.');
   }
 });
 
