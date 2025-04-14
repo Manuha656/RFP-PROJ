@@ -128,6 +128,28 @@ document.getElementById('registerForm')?.addEventListener('submit', async functi
   }
 });
 
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault(); // Stop form from submitting
+
+  const username = document.getElementById('loginUsername').value;
+  const password = document.getElementById('loginPassword').value;
+
+  try {
+    const res = await fetch('https://rfp-proj.onrender.com/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+    alert(data.message); // 👈 Show popup
+
+  } catch (error) {
+    console.error('Login failed:', error);
+    alert('❌ Login failed. Please try again later.');
+  }
+});
+
 // const container = document.querySelector('.container');
 // const registerBtn = document.querySelector('.register-btn');
 // const loginBtn = document.querySelector('.login-btn');
