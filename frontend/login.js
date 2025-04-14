@@ -152,13 +152,11 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
 function closePopup() {
   document.getElementById("popup").classList.add("hidden");
 
-  // Reset only the last used form
-  if (lastForm === 'login') {
-    document.getElementById("loginForm").reset();
-  } else if (lastForm === 'register') {
-    document.getElementById("registerForm").reset();
-  }
+  // Reset both forms after popup closes
+  document.getElementById("loginForm").reset();
+  document.getElementById("registerForm").reset();
 }
+
 
 
 // const container = document.querySelector('.container');
