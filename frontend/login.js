@@ -72,64 +72,21 @@ loginBtn.addEventListener('click', () => {
 //   });
 // });
 
-function showPopup(message) {
-  const popup = document.getElementById('popup');
-  const popupMessage = document.getElementById('popup-message');
-  popupMessage.textContent = message;
-  popup.classList.remove('hidden');
-}
+const container = document.querySelector('.container');
+const registerBtn = document.querySelector('.register-btn');
+const loginBtn = document.querySelector('.login-btn');
 
-function closePopup() {
-  document.getElementById('popup').classList.add('hidden');
-}
-
-// LOGIN
-document.getElementById('loginForm')?.addEventListener('submit', async function (e) {
-  e.preventDefault();
-
-  const username = this.username.value;
-  const password = this.password.value;
-
-  try {
-    const res = await fetch('https://rfp-proj.onrender.com/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
-    });
-
-    const message = await res.text();
-    showPopup(message);
-  } catch (err) {
-    console.error('❌ Login Error:', err);
-    showPopup('❌ Login failed. Try again.');
-  }
+registerBtn.addEventListener('click', () => {
+  container.classList.add('active');
 });
 
-// REGISTER
-document.getElementById('registerForm')?.addEventListener('submit', async function (e) {
-  e.preventDefault();
-
-  const username = this.username.value;
-  const email = this.email.value;
-  const password = this.password.value;
-
-  try {
-    const res = await fetch('https://rfp-proj.onrender.com/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, email, password })
-    });
-
-    const message = await res.text();
-    showPopup(message);
-  } catch (err) {
-    console.error('❌ Registration Error:', err);
-    showPopup('❌ Registration failed. Try again.');
-  }
+loginBtn.addEventListener('click', () => {
+  container.classList.remove('active');
 });
 
+// 🔐 Login Form Handling
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
-  e.preventDefault(); // Stop form from submitting
+  e.preventDefault();
 
   const username = document.getElementById('loginUsername').value;
   const password = document.getElementById('loginPassword').value;
@@ -142,11 +99,35 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     });
 
     const data = await res.json();
-    alert(data.message); // 👈 Show popup
+    alert(data.message);
 
-  } catch (error) {
-    console.error('Login failed:', error);
+  } catch (err) {
+    console.error(err);
     alert('❌ Login failed. Please try again later.');
+  }
+});
+
+// 📝 Register Form Handling
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const username = document.getElementById('registerUsername').value;
+  const email = document.getElementById('registerEmail').value;
+  const password = document.getElementById('registerPassword').value;
+
+  try {
+    const res = await fetch('https://rfp-proj.onrender.com/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password })
+    });
+
+    const data = await res.json();
+    alert(data.message);
+
+  } catch (err) {
+    console.error(err);
+    alert('❌ Registration failed. Please try again later.');
   }
 });
 
