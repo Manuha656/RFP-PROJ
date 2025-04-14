@@ -95,23 +95,18 @@
 //   console.log(`🚀 Server running on http://localhost:${PORT}`);
 // });
 
-
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
-const cors = require('cors');
 const User = require('./User');
 
 const app = express();
 
 // Middleware
-app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, {
@@ -121,12 +116,57 @@ mongoose.connect(process.env.MONGODB_URI, {
 .then(() => console.log("✅ Connected to MongoDB Atlas"))
 .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-// Serve login.html
+// Serve login.html from frontend
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/login.html'));
 });
 
-// Add test user route
+// Login Route
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    if (!username || !password) {
+      return res.status(400).json({ success: false, message: "❌ Username and password required." });
+    }
+
+    const user = await User.findOne({ username, password });
+    if (user) {
+      return res.json({ success: true, message: `✅ Login successful! Welcome, ${user.username}` });
+    } else {
+      return res.json({ success: false, message: "❌ Invalid username or password." });
+    }
+  } catch (err) {
+    console.error("❌ Login error:", err);
+    res.status(500).json({ success: false, message: "❌ Server error during login." });
+  }
+});
+
+// Register Route
+app.post('/register', async (req, res) => {
+  const { username, email, password } = req.body;
+
+  try {
+    if (!username || !email || !password) {
+      return res.status(400).json({ success: false, message: "❌ All fields are required." });
+    }
+
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.json({ success: false, message: "❌ Username already taken." });
+    }
+
+    const newUser = new User({ username, email, password });
+    await newUser.save();
+
+    res.json({ success: true, message: `✅ Registration successful! Welcome, ${username}` });
+  } catch (err) {
+    console.error("❌ Registration error:", err);
+    res.status(500).json({ success: false, message: "❌ Server error while registering." });
+  }
+});
+
+// Add a test user (Optional)
 app.get('/addtestuser', async (req, res) => {
   try {
     const user = new User({
@@ -142,53 +182,8 @@ app.get('/addtestuser', async (req, res) => {
   }
 });
 
-// Login Route
-app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-
-  try {
-    if (!username || !password) {
-      return res.status(400).json({ success: false, message: "❌ Username and password required." });
-    }
-
-    const user = await User.findOne({ username, password });
-    if (user) {
-      return res.status(200).json({ success: true, message: `✅ Login successful! Welcome, ${user.username}` });
-    } else {
-      return res.status(401).json({ success: false, message: '❌ Invalid username or password.' });
-    }
-  } catch (error) {
-    console.error("❌ Login error:", error);
-    res.status(500).json({ success: false, message: '❌ Server error.' });
-  }
-});
-
-// Register Route
-app.post('/register', async (req, res) => {
-  const { username, email, password } = req.body;
-
-  try {
-    if (!username || !email || !password) {
-      return res.status(400).json({ success: false, message: "❌ All fields are required." });
-    }
-
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
-      return res.status(409).json({ success: false, message: '❌ Username already taken.' });
-    }
-
-    const newUser = new User({ username, email, password });
-    await newUser.save();
-
-    res.status(201).json({ success: true, message: `✅ User registered successfully! Welcome, ${username}` });
-  } catch (err) {
-    console.error("❌ Registration error:", err);
-    res.status(500).json({ success: false, message: '❌ Server error while registering.' });
-  }
-});
-
-// Server start
+// Start Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
