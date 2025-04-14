@@ -126,6 +126,15 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
   }
 });
 
+function closePopup() {
+  document.getElementById("popup").classList.add("hidden");
+
+  // Reset both forms after popup closes
+  document.getElementById("loginForm").reset();
+  document.getElementById("registerForm").reset();
+}
+
+
 // const container = document.querySelector('.container');
 // const registerBtn = document.querySelector('.register-btn');
 // const loginBtn = document.querySelector('.login-btn');
