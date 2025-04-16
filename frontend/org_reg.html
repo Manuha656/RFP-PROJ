@@ -1300,82 +1300,122 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById("organizerForm").addEventListener("submit", function(event) {
-            event.preventDefault();
+<script>
+    // Form submit handler
+    document.getElementById("organizerForm").addEventListener("submit", async function(event) {
+        event.preventDefault(); // Prevent the default form submission
 
-            // Get form values
-            const organizerName = document.getElementById("organizerName").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const phone = document.getElementById("phone").value.trim();
-            const password = document.getElementById("password").value;
-            const eventName = document.getElementById("eventName").value.trim();
-            const speakerName = document.getElementById("speakerName").value.trim();
-            const eventDate = document.getElementById("eventDate").value;
-            const availableTickets = document.getElementById("availableTickets").value;
+        // Get form values
+        const organizerName = document.getElementById("organizerName").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const password = document.getElementById("password").value;
+        const eventName = document.getElementById("eventName").value.trim();
+        const speakerName = document.getElementById("speakerName").value.trim();
+        const eventDate = document.getElementById("eventDate").value;
+        const availableTickets = document.getElementById("availableTickets").value;
 
-            // Validation
-            if (organizerName === "" || email === "" || phone === "" || 
-                password === "" || eventName === "" || speakerName === "" || 
-                eventDate === "" || availableTickets === "" || isNaN(availableTickets)) {
-                alert("Please fill in all fields correctly.");
-                return;
-            }
-
-            if (phone.length !== 10 || !/^\d+$/.test(phone)) {
-                alert("Please enter a valid 10-digit phone number.");
-                return;
-            }
-
-            if (!document.getElementById("terms").checked) {
-                alert("You must agree to the terms of service.");
-                return;
-            }
-
-            // Show details in the modal
-            document.getElementById("displayOrganizer").textContent = organizerName;
-            document.getElementById("displayEmail").textContent = email;
-            document.getElementById("displayPhone").textContent += phone;
-            document.getElementById("displayEvent").textContent = eventName;
-            document.getElementById("displaySpeaker").textContent = speakerName;
-            document.getElementById("displayDate").textContent = new Date(eventDate).toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            document.getElementById("displayTickets").textContent = availableTickets;
-
-            let modal = document.getElementById("popupModal");
-            modal.style.display = "flex";
-
-            // Reset form
-            this.reset();
-        });
-
-        // Close modal when clicking the close button
-        document.querySelector(".close-btn").addEventListener("click", function() {
-            document.getElementById("popupModal").style.display = "none";
-            resetModal();
-        });
-
-        // Close modal when clicking outside of the content
-        window.addEventListener("click", function(event) {
-            let modal = document.getElementById("popupModal");
-            if (event.target === modal) {
-                modal.style.display = "none";
-                resetModal();
-            }
-        });
-
-        // Reset modal content
-        function resetModal() {
-            document.getElementById("displayPhone").textContent = "+91 ";
+        // Validation
+        if (organizerName === "" || email === "" || phone === "" || 
+            password === "" || eventName === "" || speakerName === "" || 
+            eventDate === "" || availableTickets === "" || isNaN(availableTickets)) {
+            alert("Please fill in all fields correctly.");
+            return;
         }
 
-        // Phone number validation
-        document.getElementById("phone").addEventListener("input", function(e) {
-            this.value = this.value.replace(/\D/g, '').slice(0, 10);
+        // Phone number validation (must be 10 digits)
+        if (phone.length !== 10 || !/^\d+$/.test(phone)) {
+            alert("Please enter a valid 10-digit phone number.");
+            return;
+        }
+
+        // Check if terms are accepted
+        if (!document.getElementById("terms").checked) {
+            alert("You must agree to the terms of service.");
+            return;
+        }
+
+        // Show details in the modal
+        document.getElementById("displayOrganizer").textContent = organizerName;
+        document.getElementById("displayEmail").textContent = email;
+        document.getElementById("displayPhone").textContent = "+91 " + phone; // Ensure phone format is correct
+        document.getElementById("displayEvent").textContent = eventName;
+        document.getElementById("displaySpeaker").textContent = speakerName;
+        document.getElementById("displayDate").textContent = new Date(eventDate).toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
         });
-    </script>
+        document.getElementById("displayTickets").textContent = availableTickets;
+
+        // Show the success modal
+        let modal = document.getElementById("popupModal");
+        modal.style.display = "flex";
+
+        // Send the form data to the server
+        try {
+            const response = await fetch('/organizer/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    organizerName,
+                    email,
+                    phone,
+                    password,
+                    eventName,
+                    speakerName,
+                    eventDate,
+                    availableTickets
+                })
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert("Registration successful!");
+                // Optionally reset the form after successful registration
+                this.reset();
+            } else {
+                alert(result.message || 'Registration failed. Please try again.');
+            }
+        } catch (error) {
+            console.error("Error during registration:", error);
+            alert('Something went wrong. Please try again later.');
+        }
+    });
+
+    // Close modal when clicking the close button
+    document.querySelector(".close-btn").addEventListener("click", function() {
+        document.getElementById("popupModal").style.display = "none";
+        resetModal();
+    });
+
+    // Close modal when clicking outside of the modal content
+    window.addEventListener("click", function(event) {
+        let modal = document.getElementById("popupModal");
+        if (event.target === modal) {
+            modal.style.display = "none";
+            resetModal();
+        }
+    });
+
+    // Reset modal content
+    function resetModal() {
+        document.getElementById("displayPhone").textContent = "+91 ";
+        document.getElementById("displayOrganizer").textContent = '';
+        document.getElementById("displayEmail").textContent = '';
+        document.getElementById("displayEvent").textContent = '';
+        document.getElementById("displaySpeaker").textContent = '';
+        document.getElementById("displayDate").textContent = '';
+        document.getElementById("displayTickets").textContent = '';
+    }
+
+    // Phone number validation: allow only numeric input, limit to 10 digits
+    document.getElementById("phone").addEventListener("input", function(e) {
+        this.value = this.value.replace(/\D/g, '').slice(0, 10);
+    });
+</script>
+
 </body>
 </html>
