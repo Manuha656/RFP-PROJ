@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    .ux-bootcamp-page {
     :root {
       --primary: #7c3aed;
       --primary-light: #8b5cf6;
@@ -27,7 +28,7 @@
       box-sizing: border-box;
     }
 
-    body {
+    .ux-bootcamp-page {
       font-family: 'Montserrat', sans-serif;
       color: var(--text-dark);
       min-height: 100vh;
@@ -45,7 +46,7 @@
       overflow-x: hidden;
     }
 
-    .container {
+    .ux-bootcamp-page .container {
       max-width: 1200px;
       width: 100%;
       margin: auto;
@@ -63,7 +64,7 @@
       z-index: 1;
     }
 
-    .container::before {
+    .ux-bootcamp-page .container::before {
       content: '';
       position: absolute;
       top: -50%;
@@ -80,7 +81,7 @@
       100% { transform: rotate(360deg); }
     }
 
-    .container::after {
+    .ux-bootcamp-page .container::after {
       content: '';
       position: absolute;
       inset: 0;
@@ -805,9 +806,10 @@
         justify-content: center;
       }
     }
+}
   </style>
 </head>
-<body>
+<body class="ux-bootcamp-page">
   <div class="particles" id="particles"></div>
   
   <div class="container">
