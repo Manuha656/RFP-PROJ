@@ -79,8 +79,6 @@
 // });
 
 
-
-
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -88,7 +86,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const User = require('./User');
-const Organizer = require('./Organizer');  // Import the Organizer.js
+const Organizer = require('./Organizer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -99,13 +97,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-// MongoDB Connection
+// MongoDB Connection with improved error handling
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
   .then(() => console.log('✅ Connected to MongoDB Atlas'))
-  .catch((err) => console.error('❌ MongoDB connection error:', err));
+  .catch((err) => {
+    console.error('❌ MongoDB connection error:', err);
+    process.exit(1); // Exit if DB connection fails
+  });
 
 // Route: Serve login page
 app.get('/', (req, res) => {
@@ -156,38 +157,87 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// Route: Organizer Registration
+// Route: Organizer Registration (Improved)
 app.post('/organizer/register', async (req, res) => {
-  const { organizerName, email, phone, password, eventName, speakerName, eventDate, availableTickets } = req.body;
+  const { 
+    organizerName, 
+    email, 
+    phone, 
+    password, 
+    eventName, 
+    speakerName, 
+    eventDate, 
+    availableTickets 
+  } = req.body;
 
+  // Validate required fields
   if (!organizerName || !email || !phone || !password || !eventName || !speakerName || !eventDate || !availableTickets) {
-    return res.status(400).json({ success: false, message: '❌ All fields are required.' });
+    return res.status(400).json({ 
+      success: false, 
+      message: 'All fields are required.' 
+    });
+  }
+
+  // Validate phone number format
+  if (!/^\d{10}$/.test(phone)) {
+    return res.status(400).json({ 
+      success: false, 
+      message: 'Please provide a valid 10-digit phone number.' 
+    });
   }
 
   try {
+    // Check if organizer already exists
     const existingOrganizer = await Organizer.findOne({ email });
     if (existingOrganizer) {
-      return res.status(409).json({ success: false, message: '⚠️ Organizer with this email already exists.' });
+      return res.status(409).json({ 
+        success: false, 
+        message: 'Organizer with this email already exists.' 
+      });
     }
 
+    // Create new organizer
     const newOrganizer = new Organizer({
       organizerName,
-      email,
+      email: email.toLowerCase(),
       phone,
       password,
       eventName,
       speakerName,
-      eventDate,
-      availableTickets
+      eventDate: new Date(eventDate),
+      availableTickets: parseInt(availableTickets)
     });
 
+    // Save to database
     await newOrganizer.save();
 
-    return res.status(201).json({ success: true, message: '✅ Organizer registration successful!' });
+    // Return success response
+    return res.status(201).json({ 
+      success: true, 
+      message: 'Organizer registration successful!',
+      organizer: {
+        organizerName,
+        email,
+        phone,
+        eventName,
+        speakerName,
+        eventDate,
+        availableTickets
+      }
+    });
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ success: false, message: '❌ Organizer registration failed. Try again later.' });
+    console.error('Organizer registration error:', err);
+    return res.status(500).json({ 
+      success: false, 
+      message: 'Organizer registration failed. Please try again later.' 
+    });
   }
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ success: false, message: 'Something went wrong!' });
 });
 
 // Start Server
