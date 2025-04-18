@@ -158,7 +158,10 @@ app.post('/login', async (req, res) => {
 });
 
 // Route: Organizer Registration (Improved)
+// Route: Organizer Registration (Improved with detailed error logging)
 app.post('/organizer/register', async (req, res) => {
+  console.log('Received registration data:', req.body); // Log incoming data
+
   const { 
     organizerName, 
     email, 
@@ -170,26 +173,21 @@ app.post('/organizer/register', async (req, res) => {
     availableTickets 
   } = req.body;
 
-  // Validate required fields
-  if (!organizerName || !email || !phone || !password || !eventName || !speakerName || !eventDate || !availableTickets) {
-    return res.status(400).json({ 
-      success: false, 
-      message: 'All fields are required.' 
-    });
-  }
-
-  // Validate phone number format
-  if (!/^\d{10}$/.test(phone)) {
-    return res.status(400).json({ 
-      success: false, 
-      message: 'Please provide a valid 10-digit phone number.' 
-    });
-  }
-
   try {
+    // Validate required fields
+    if (!organizerName || !email || !phone || !password || !eventName || !speakerName || !eventDate || !availableTickets) {
+      console.log('Validation failed - missing fields');
+      return res.status(400).json({ 
+        success: false, 
+        message: 'All fields are required.' 
+      });
+    }
+
     // Check if organizer already exists
+    console.log('Checking for existing organizer...');
     const existingOrganizer = await Organizer.findOne({ email });
     if (existingOrganizer) {
+      console.log('Organizer already exists with email:', email);
       return res.status(409).json({ 
         success: false, 
         message: 'Organizer with this email already exists.' 
@@ -197,6 +195,7 @@ app.post('/organizer/register', async (req, res) => {
     }
 
     // Create new organizer
+    console.log('Creating new organizer...');
     const newOrganizer = new Organizer({
       organizerName,
       email: email.toLowerCase(),
@@ -209,7 +208,9 @@ app.post('/organizer/register', async (req, res) => {
     });
 
     // Save to database
+    console.log('Saving organizer...');
     await newOrganizer.save();
+    console.log('Organizer saved successfully:', newOrganizer);
 
     // Return success response
     return res.status(201).json({ 
@@ -225,11 +226,20 @@ app.post('/organizer/register', async (req, res) => {
         availableTickets
       }
     });
+
   } catch (err) {
     console.error('Organizer registration error:', err);
+    console.error('Error details:', {
+      name: err.name,
+      message: err.message,
+      stack: err.stack,
+      errors: err.errors
+    });
+    
     return res.status(500).json({ 
       success: false, 
-      message: 'Organizer registration failed. Please try again later.' 
+      message: 'Organizer registration failed. Please try again later.',
+      error: err.message // Send the actual error message to client
     });
   }
 });
