@@ -4,48 +4,43 @@ const mongoose = require('mongoose');
 const organizerSchema = new mongoose.Schema({
   organizerName: {
     type: String,
-    required: true,
+    required: [true, 'Organizer name is required'],
     trim: true,
   },
   email: {
     type: String,
-    required: true,
-    unique: true,  // Ensure email is unique
+    required: [true, 'Email is required'],
     trim: true,
     lowercase: true,
-    match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email address.'],
   },
   phone: {
     type: String,
-    required: true,
-    match: [/^\d{10}$/, 'Please provide a valid 10-digit phone number.'], // Phone number validation
+    required: [true, 'Phone number is required'],
+    trim: true,
   },
   password: {
     type: String,
-    required: true,
-    minlength: 6,  // Ensure password is at least 6 characters long
+    required: [true, 'Password is required'],
   },
   eventName: {
     type: String,
-    required: true,
+    required: [true, 'Event name is required'],
     trim: true,
   },
   speakerName: {
     type: String,
-    required: true,
+    required: [true, 'Speaker name is required'],
     trim: true,
   },
   eventDate: {
     type: Date,
-    required: true,
+    required: [true, 'Event date is required'],
   },
   availableTickets: {
     type: Number,
-    required: true,
-    min: 1,  // Ensure there is at least one ticket available
-    max: 100,  // Limit the available tickets to 100
+    required: [true, 'Available tickets count is required'],
   },
-});
+}, { timestamps: true }); // Add timestamps for debugging
 
 // Create and export the Organizer model
 const Organizer = mongoose.model('Organizer', organizerSchema);
